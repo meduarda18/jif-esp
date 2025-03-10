@@ -1,9 +1,6 @@
 package br.edu.ifpb.aps.jifesp.entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 
 @MappedSuperclass
 public abstract class UsuarioEntity {
@@ -19,9 +16,7 @@ public abstract class UsuarioEntity {
         this.matricula = matricula;
     }
 
-    public UsuarioEntity() {
-
-    }
+    protected UsuarioEntity() {}
 
     public Long getIdUsuario() {
         return idUsuario;

@@ -19,7 +19,7 @@ public class SumulaEntity {
     private String fase;
 
     @Column(name = "resultado") // Especifique o nome da coluna
-    private int resultado;
+    private String resultado;
 
     @Column(name = "observacoes", columnDefinition = "TEXT") // Especifique o nome da coluna
     private String observacoes;
@@ -28,7 +28,7 @@ public class SumulaEntity {
     public SumulaEntity() {
     }
 
-    public SumulaEntity(JogoEntity jogo, String fase, int resultado, String observacoes) {
+    public SumulaEntity(JogoEntity jogo, String fase, String resultado, String observacoes) {
         this.jogo = jogo;
         this.fase = fase;
         this.resultado = resultado;
@@ -55,11 +55,11 @@ public class SumulaEntity {
         this.fase = fase;
     }
 
-    public int getResultado() {
+    public String getResultado() {
         return resultado;
     }
 
-    public void setResultado(int resultado) {
+    public void setResultado(String resultado) {
         this.resultado = resultado;
     }
 
