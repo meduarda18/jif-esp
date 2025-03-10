@@ -21,7 +21,7 @@ public class AtletaEntity extends UsuarioEntity {
     private List<ModalidadeEntity> modalidades;
 
     @ManyToOne
-    @JoinColumn(name = "id_equipe") // Chave estrangeira para a tabela equipes
+    @JoinColumn(name = "id_equipe", nullable = true) // Chave estrangeira para a tabela equipes
     private EquipeEntity equipe;
 
     // Construtor padrão (sem argumentos) - **ESSENCIAL**

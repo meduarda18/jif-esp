@@ -2,10 +2,12 @@ package br.edu.ifpb.aps.jifesp.service;
 
 import br.edu.ifpb.aps.jifesp.entity.SumulaEntity;
 import br.edu.ifpb.aps.jifesp.repository.SumulaRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class SumulaService implements CrudService<SumulaEntity, Long>{
     private final SumulaRepository sumulaRepository;
 

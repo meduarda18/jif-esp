@@ -16,9 +16,8 @@ public class EquipeEntity {
     @Column(name = "nome_equipe", nullable = false) // Especifique o nome da coluna e nullable
     private String nomeEquipe;
 
-    @OneToOne
-    @JoinColumn(name = "id_capitao") // Nova coluna para armazenar o ID do capitão
-    private AtletaEntity capitao;
+    @Column(name = "id_capitao")
+    private Long idCapitao;
 
 
     @ManyToMany
@@ -43,9 +42,9 @@ public class EquipeEntity {
     }
 
 
-    public EquipeEntity(String nomeEquipe, AtletaEntity capitao, List<AtletaEntity> jogadores, List<Integer> matriculas) {
+    public EquipeEntity(String nomeEquipe, Long idCapitao, List<AtletaEntity> jogadores, List<Integer> matriculas) {
         this.nomeEquipe = nomeEquipe;
-        this.capitao = capitao;
+        this.idCapitao = idCapitao;
         this.jogadores = jogadores;
         this.matriculas = matriculas;
     }
@@ -62,15 +61,12 @@ public class EquipeEntity {
         this.nomeEquipe = nomeEquipe;
     }
 
-    public AtletaEntity getCapitao() {
-        return capitao;
+    public Long getIdCapitao() {
+        return idCapitao;
     }
 
-    public void setCapitao(AtletaEntity capitao) {
-        if (jogadores != null && !jogadores.contains(capitao)) {
-            throw new IllegalArgumentException("O capitão deve ser um dos jogadores da equipe!");
-        }
-        this.capitao = capitao;
+    public void setIdCapitao(Long idCapitao) {
+        this.idCapitao = idCapitao;
     }
 
 
