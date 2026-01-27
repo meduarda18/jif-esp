@@ -1,6 +1,7 @@
 package br.edu.ifpb.aps.jifesp.controller;
 
 import br.edu.ifpb.aps.jifesp.entity.AtletaEntity;
+import br.edu.ifpb.aps.jifesp.entity.Situacao;
 import br.edu.ifpb.aps.jifesp.service.AtletaService;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +13,7 @@ public class AtletaController {
 
     private final AtletaService atletaService;
 
-    public AtletaController(AtletaService atletaService){
+    public AtletaController(AtletaService atletaService) {
         this.atletaService = atletaService;
     }
 
@@ -34,5 +35,11 @@ public class AtletaController {
     @GetMapping
     public List<AtletaEntity> listarAtletas() {
         return atletaService.findAll();
+    }
+
+    @GetMapping("/filtrar")
+    public List<AtletaEntity> filtrarPorSituacao(
+            @RequestParam Situacao situacao) {
+        return atletaService.filtrarPorSituacao(situacao);
     }
 }
