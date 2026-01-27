@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "atletas")
 public class AtletaEntity extends UsuarioEntity {
@@ -21,7 +23,8 @@ public class AtletaEntity extends UsuarioEntity {
     private List<ModalidadeEntity> modalidades;
 
     @ManyToOne
-    @JoinColumn(name = "id_equipe", nullable = true) // Chave estrangeira para a tabela equipes
+    @JoinColumn(name = "id_equipe", nullable = true)
+    @JsonBackReference
     private EquipeEntity equipe;
 
     // Construtor padrão (sem argumentos) - **ESSENCIAL**

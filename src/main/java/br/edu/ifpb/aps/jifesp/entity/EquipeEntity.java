@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "equipes")
 public class EquipeEntity {
@@ -16,25 +18,12 @@ public class EquipeEntity {
     @Column(name = "nome_equipe", nullable = false) // Especifique o nome da coluna e nullable
     private String nomeEquipe;
 
-    @Column(name = "id_capitao")
-    private Long idCapitao;
+    @Column(name = "capitao")
+    private String capitao;
 
-
-    @ManyToMany
-    @JoinTable(
-            name = "equipe_atleta", // Nome da tabela intermediária
-            joinColumns = @JoinColumn(name = "id_equipe"), // Coluna da EquipeEntity na tabela intermediária
-            inverseJoinColumns = @JoinColumn(name = "id_atleta") // Coluna da AtletaEntity na tabela intermediária
-    )
+    @OneToMany(mappedBy = "equipe", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<AtletaEntity> jogadores;
-
-    @ElementCollection // Para listas de tipos básicos (Integer, String, etc.)
-    @CollectionTable(
-            name = "equipe_matriculas", // Nome da tabela para armazenar as matrículas
-            joinColumns = @JoinColumn(name = "id_equipe") // Coluna que referencia a EquipeEntity
-    )
-    @Column(name = "matricula") // Nome da coluna para a matrícula
-    private List<Integer> matriculas;
 
 
     // **IMPORTANTE**: Adicione um construtor sem argumentos (default) para JPA
@@ -42,11 +31,10 @@ public class EquipeEntity {
     }
 
 
-    public EquipeEntity(String nomeEquipe, Long idCapitao, List<AtletaEntity> jogadores, List<Integer> matriculas) {
+    public EquipeEntity(String nomeEquipe, String capitao, List<AtletaEntity> jogadores) {
         this.nomeEquipe = nomeEquipe;
-        this.idCapitao = idCapitao;
+        this.capitao = capitao;
         this.jogadores = jogadores;
-        this.matriculas = matriculas;
     }
 
     public Long getIdEquipe() {
@@ -61,12 +49,12 @@ public class EquipeEntity {
         this.nomeEquipe = nomeEquipe;
     }
 
-    public Long getIdCapitao() {
-        return idCapitao;
+    public String getCapitao() {
+        return capitao;
     }
 
-    public void setIdCapitao(Long idCapitao) {
-        this.idCapitao = idCapitao;
+    public void setCapitao(String capitao) {
+        this.capitao = capitao;
     }
 
 
@@ -76,13 +64,5 @@ public class EquipeEntity {
 
     public void setJogadores(List<AtletaEntity> jogadores) {
         this.jogadores = jogadores;
-    }
-
-    public List<Integer> getMatriculas() {
-        return matriculas;
-    }
-
-    public void setMatriculas(List<Integer> matriculas) {
-        this.matriculas = matriculas;
     }
 }

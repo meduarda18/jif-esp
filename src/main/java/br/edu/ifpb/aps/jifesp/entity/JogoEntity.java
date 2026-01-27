@@ -10,43 +10,32 @@ public class JogoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_jogo") // Especifique o nome da coluna
+    @Column(name = "id_jogo")
     private Long idJogo;
 
-    @ManyToOne
-    @JoinColumn(name = "id_campeonato") // Chave estrangeira que referencia o campeonato
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_campeonato")
     private CampeonatoEntity campeonato;
 
     @ManyToOne
-    @JoinColumn(name = "id_monitor") // Chave estrangeira para UsuarioEntity (árbitro)
+    @JoinColumn(name = "id_monitor")
     private MonitorEntity monitor;
 
-
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany
     @JoinTable(
-            name = "jogo_atleta", // Nome da tabela intermediária
-            joinColumns = @JoinColumn(name = "id_jogo"), // Coluna da JogoEntity na tabela intermediária
-            inverseJoinColumns = @JoinColumn(name = "id_atleta") // Coluna da AtletaEntity na tabela intermediária
+        name = "jogo_atleta",
+        joinColumns = @JoinColumn(name = "id_jogo"),
+        inverseJoinColumns = @JoinColumn(name = "id_atleta")
     )
     private List<AtletaEntity> participantes;
 
-    @Column(name = "placar") // Especifique o nome da coluna
+    @Column(name = "placar")
     private String placar;
 
     @OneToOne(mappedBy = "jogo", cascade = CascadeType.ALL, orphanRemoval = true)
     private SumulaEntity sumula;
 
-    // Construtor padrão (sem argumentos) - **ESSENCIAL**
-    public JogoEntity() {
-    }
-
-    public JogoEntity(CampeonatoEntity campeonato, MonitorEntity monitor, List<AtletaEntity> participantes, String placar, SumulaEntity sumula) {
-        this.participantes = participantes;
-        this.placar = placar;
-        this.campeonato = campeonato;
-        this.monitor = monitor;
-        this.sumula = sumula;
-    }
+    public JogoEntity() {}
 
     public Long getIdJogo() {
         return idJogo;
@@ -90,5 +79,8 @@ public class JogoEntity {
 
     public void setSumula(SumulaEntity sumula) {
         this.sumula = sumula;
+        if (sumula != null) {
+            sumula.setJogo(this);
+        }
     }
 }
