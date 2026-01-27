@@ -85,6 +85,7 @@
                             <element>CLASS</element>
                             <includes>
                                 <include>br.edu.ifpb.aps.jifesp.controller.AtletaController</include>
+								<include>br.edu.ifpb.aps.jifesp.controller.EquipeController</include>
                             </includes>
                             <limits>
                                 <limit>
