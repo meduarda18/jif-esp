@@ -19,7 +19,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.edu.ifpb.aps.jifesp.controller.AtletaController;
@@ -57,27 +56,26 @@ public class AtletaControllerTests {
         Mockito.when(atletaService.save(Mockito.any(AtletaEntity.class))).thenReturn(atleta1);
 
         mockMvc.perform(
-            post("/atletas")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(atleta1))
-        )
-        .andExpect(status().isOk())
-        .andExpect(jsonPath("$.nome").value("João Vitor"))
-        .andExpect(jsonPath("$.matricula").value(12345));
+                post("/atletas")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(atleta1)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.nome").value("João Vitor"))
+                .andExpect(jsonPath("$.matricula").value(12345));
     }
 
     @Test
     void deveEditarAtletaComSucesso() throws Exception {
         Mockito.when(atletaService.update(
-            Mockito.eq(2L), 
-            Mockito.any(AtletaEntity.class)))
-        .thenReturn(atleta2);
+                Mockito.eq(2L),
+                Mockito.any(AtletaEntity.class)))
+                .thenReturn(atleta2);
 
         mockMvc.perform(put("/atletas/{id}", 2L)
-            .contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString((atleta2))))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.nome").value("Maria Eduarda"))
-            .andExpect(jsonPath("$.matricula").value(67890));
+                .contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString((atleta2))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.nome").value("Maria Eduarda"))
+                .andExpect(jsonPath("$.matricula").value(67890));
     }
 
     @Test
@@ -85,16 +83,16 @@ public class AtletaControllerTests {
         Mockito.when(atletaService.findAll()).thenReturn(List.of(atleta1, atleta2));
 
         mockMvc.perform(get("/atletas"))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$[0].nome").value("João Vitor"))
-            .andExpect(jsonPath("$[1].nome").value("Maria Eduarda"));
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].nome").value("João Vitor"))
+                .andExpect(jsonPath("$[1].nome").value("Maria Eduarda"));
     }
 
     @Test
     void deveDeletarAtletaComSucesso() throws Exception {
         mockMvc.perform(delete("/atletas/{id}", 1L))
-            .andExpect(status().isOk());
-        
+                .andExpect(status().isOk());
+
         Mockito.verify(atletaService).delete(1L);
     }
 
@@ -104,11 +102,10 @@ public class AtletaControllerTests {
         Mockito.when(atletaService.filtrarPorSituacao(Situacao.APTO)).thenReturn(atletas);
 
         mockMvc.perform(
-            get("/atletas/filtrar")
-                .param("situacao", "APTO")
-        )
-        .andExpect(status().isOk())
-        .andExpect(jsonPath("$.length()").value(2))
-        .andExpect(jsonPath("$[0].nome").value("João Vitor"));
+                get("/atletas/filtrar")
+                        .param("situacao", "APTO"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].nome").value("João Vitor"));
     }
 }
