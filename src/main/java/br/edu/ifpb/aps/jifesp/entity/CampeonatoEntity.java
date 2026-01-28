@@ -21,6 +21,11 @@ public class CampeonatoEntity {
 
     public CampeonatoEntity() {}
 
+    public CampeonatoEntity(String nome, List<JogoEntity> jogos) {
+        this.nome = nome;
+        this.jogos = jogos;
+    }
+
     public Long getIdCampeonato() {
         return idCampeonato;
     }
