@@ -5,15 +5,13 @@ import br.edu.ifpb.aps.jifesp.repository.CampeonatoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class CampeonatoService implements CrudService <CampeonatoEntity, Long> {
+public class CampeonatoService implements CrudService<CampeonatoEntity, Long> {
 
     private final CampeonatoRepository campeonatoRepository;
 
-
-    public CampeonatoService(CampeonatoRepository campeonatoRepository){
+    public CampeonatoService(CampeonatoRepository campeonatoRepository) {
         this.campeonatoRepository = campeonatoRepository;
     }
 
@@ -24,27 +22,27 @@ public class CampeonatoService implements CrudService <CampeonatoEntity, Long> {
 
     @Override
     public CampeonatoEntity update(Long id, CampeonatoEntity campeonatoEntity) {
-         Optional<CampeonatoEntity> campeonatoExistente = campeonatoRepository.findById(id);
-        if (campeonatoExistente.isPresent()) {
-            return campeonatoRepository.save(campeonatoEntity);
+        CampeonatoEntity existente = campeonatoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Campeonato não encontrado"));
+
+        if (campeonatoEntity.getNome() != null) {
+            existente.setNome(campeonatoEntity.getNome());
         }
-        System.out.println("Campeonato não encontrado.");
-        return null;
+
+        return campeonatoRepository.save(existente);
     }
 
     @Override
-    public void delete(Long id) { 
-        if (campeonatoRepository.existsById(id)) {
+    public void delete(Long id) {
+        if (!campeonatoRepository.existsById(id)) {
+            throw new RuntimeException("Campeonato não encontrado");
+        }
         campeonatoRepository.deleteById(id);
-        System.out.println("Campeonato removido com sucesso.");
-    } else {
-        System.out.println("Campeonato não encontrado.");
-    }
     }
 
     @Override
     public List<CampeonatoEntity> findAll() {
         return campeonatoRepository.findAll();
     }
-    
+
 }

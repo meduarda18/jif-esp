@@ -16,12 +16,10 @@ public class CampeonatoEntity {
     @Column(name = "nome", nullable = false)
     private String nome;
 
-    @OneToMany(mappedBy = "campeonato", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "campeonato", fetch = FetchType.LAZY)
     private List<JogoEntity> jogos;
 
-    // Construtor padrão (sem argumentos) - **ESSENCIAL**
-    public CampeonatoEntity() {
-    }
+    public CampeonatoEntity() {}
 
     public CampeonatoEntity(String nome, List<JogoEntity> jogos) {
         this.nome = nome;

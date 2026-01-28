@@ -2,33 +2,38 @@ package br.edu.ifpb.aps.jifesp.service;
 
 import br.edu.ifpb.aps.jifesp.entity.EquipeEntity;
 import br.edu.ifpb.aps.jifesp.repository.EquipeRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EquipeService implements CrudService<EquipeEntity, Long> {
 
     private EquipeRepository equipeRepository;
 
-    public EquipeService(EquipeRepository equipeRepository){
+    public EquipeService(EquipeRepository equipeRepository) {
         this.equipeRepository = equipeRepository;
     }
 
     @Override
-    public EquipeEntity save(EquipeEntity equipeEntity) {
-        return equipeRepository.save(equipeEntity);
+    public EquipeEntity save(EquipeEntity equipe) {
+        return equipeRepository.save(equipe);
     }
 
     @Override
     public EquipeEntity update(Long id, EquipeEntity equipeEntity) {
-        Optional<EquipeEntity> equipeExistente = equipeRepository.findById(id);
-        if (equipeExistente.isPresent()) {
-            return equipeRepository.save(equipeEntity);
+        EquipeEntity existente = equipeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Equipe não encontrada"));
+
+        existente.setNomeEquipe(equipeEntity.getNomeEquipe());
+
+        // Só atualiza se vier no request
+        if (equipeEntity.getCapitao() != null) {
+            existente.setCapitao(equipeEntity.getCapitao());
         }
-        System.out.println("Equipe não encontrado.");
-        return null;
+        
+        return equipeRepository.save(existente);
     }
 
     @Override

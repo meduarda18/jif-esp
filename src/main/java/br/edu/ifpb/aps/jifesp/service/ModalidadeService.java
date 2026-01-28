@@ -5,7 +5,6 @@ import br.edu.ifpb.aps.jifesp.repository.ModalidadeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ModalidadeService implements CrudService<ModalidadeEntity, Long> {
@@ -22,21 +21,23 @@ public class ModalidadeService implements CrudService<ModalidadeEntity, Long> {
 
     @Override
     public ModalidadeEntity update(Long id, ModalidadeEntity modalidadeEntity) {
-        Optional<ModalidadeEntity> modalidadeExistenteOptional = modalidadeRepository.findById(id);
-        if (modalidadeExistenteOptional.isPresent()) {
-            ModalidadeEntity modalidadeExistente = modalidadeExistenteOptional.get();
+        ModalidadeEntity modalidadeExistente = modalidadeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Modalidade não encontrada"));
 
-            // Atualize os campos da entidade existente com os valores da nova entidade
+        if (modalidadeEntity.getNome() != null) {
             modalidadeExistente.setNome(modalidadeEntity.getNome());
-            modalidadeExistente.setQuantidadeParticipantes(modalidadeEntity.getQuantidadeParticipantes());
-            modalidadeExistente.setRegulamento(modalidadeEntity.getRegulamento());
-
-            // Salve a entidade atualizada
-            return modalidadeRepository.save(modalidadeExistente);
-        } else {
-            System.out.println("Modalidade não encontrada.");
-            return null;
         }
+
+        if (modalidadeEntity.getQuantidadeParticipantes() != 0) {
+            modalidadeExistente.setQuantidadeParticipantes(
+                    modalidadeEntity.getQuantidadeParticipantes());
+        }
+
+        if (modalidadeEntity.getRegulamento() != null) {
+            modalidadeExistente.setRegulamento(modalidadeEntity.getRegulamento());
+        }
+
+        return modalidadeRepository.save(modalidadeExistente);
     }
 
     @Override

@@ -8,20 +8,19 @@ public class ModalidadeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_modalidade") // Especifique o nome da coluna
+    @Column(name = "id_modalidade")
     private Long idModalidade;
 
-    @Enumerated(EnumType.STRING) // ou ORDINAL se preferir armazenar como inteiro
-    @Column(name = "nome", nullable = false) // Especifique o nome da coluna
+    @Enumerated(EnumType.STRING)
+    @Column(name = "nome", nullable = false)
     private NomeModalidade nome;
 
-    @Column(name = "quantidade_participantes") // Especifique o nome da coluna
+    @Column(name = "quantidade_participantes")
     private int quantidadeParticipantes;
 
-    @Column(name = "regulamento", columnDefinition = "TEXT", nullable = false) // Armazena as regras da modalidade
+    @Column(name = "regulamento", columnDefinition = "TEXT", nullable = false)
     private String regulamento;
 
-    // Construtor padrão (sem argumentos) - **ESSENCIAL**
     public ModalidadeEntity() {
     }
 
