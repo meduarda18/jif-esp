@@ -7,7 +7,6 @@ import br.edu.ifpb.aps.jifesp.entity.JogoEntity;
 import br.edu.ifpb.aps.jifesp.entity.ModalidadeEntity;
 import br.edu.ifpb.aps.jifesp.repository.AtletaRepository;
 import br.edu.ifpb.aps.jifesp.repository.EquipeRepository;
-import br.edu.ifpb.aps.jifesp.repository.JogoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +16,6 @@ public class InscricaoModalidadeService {
 
     private AtletaRepository atletarepository;
     private EquipeRepository equipeRepository;
-    private JogoRepository jogoRepository;
 
 
     public void inscreveModalidade(AtletaEntity atleta, ModalidadeEntity modalidade) {

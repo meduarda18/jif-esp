@@ -5,7 +5,6 @@ import br.edu.ifpb.aps.jifesp.repository.ModalidadeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ModalidadeService implements CrudService<ModalidadeEntity, Long> {

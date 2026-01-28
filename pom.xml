@@ -87,6 +87,7 @@
                                 <include>br.edu.ifpb.aps.jifesp.controller.AtletaController</include>
 								<include>br.edu.ifpb.aps.jifesp.controller.EquipeController</include>
 								<include>br.edu.ifpb.aps.jifesp.controller.CampeonatoController</include>
+								<include>br.edu.ifpb.aps.jifesp.controller.ModalidadeController</include>
                             </includes>
                             <limits>
                                 <limit>

@@ -2,7 +2,6 @@ package br.edu.ifpb.aps.jifesp.testeController;
 
 import java.util.List;
 
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
